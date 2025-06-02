@@ -15,8 +15,9 @@ Um sistema para gerenciar e facilitar a adoção voluntária de pets. Desenvolvi
 
 ## 🎯 Funcionalidades
 
-- Cadastro de pets disponíveis para adoção (nome, idade, raça, descrição, foto).
+- Cadastro de pets disponíveis para adoção (nome, idade, tipo, descrição, foto).
 - Visualização detalhada de cada pet.
+- Remoção do Pet ao ser adotado
 
 ## 🤝 Contribuições
 
