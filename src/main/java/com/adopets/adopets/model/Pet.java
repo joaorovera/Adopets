@@ -26,7 +26,7 @@ public class Pet {
     private Long id;
 
     @NotBlank
-    @Column(name = "tipo", nullable = false) // Gato, cachorro, papagaio, tartaruga, etc...
+    @Column(name = "type", nullable = false) // Gato, cachorro, papagaio, tartaruga, etc...
     private String type;
 
     @NotBlank
@@ -34,8 +34,11 @@ public class Pet {
     private String name;
     
     @NotBlank
-    @Column(name = "idade", nullable = false, length = 2)
+    @Column(name = "age", nullable = false, length = 2)
     private String age;
+
+    @NotBlank
+    @Column(name = "description", nullable = false, length = 300)
 
     @NotNull
     @ManyToOne
