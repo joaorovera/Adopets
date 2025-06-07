@@ -2,18 +2,18 @@ package com.adopets.adopets.model;
 
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+// import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+// import jakarta.persistence.JoinColumn;
+// import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+// import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = Pet.TABLE_NAME)
@@ -26,12 +26,12 @@ public class Pet {
     private Long id;
 
     @NotBlank
-    @Column(name = "type", nullable = false) // Gato, cachorro, papagaio, tartaruga, etc...
-    private String type;
-
-    @NotBlank
     @Column(name = "name", nullable = false, length = 50)
     private String name;
+    
+    @NotBlank
+    @Column(name = "type", nullable = false) // Gato, cachorro, papagaio, tartaruga, etc...
+    private String type;
     
     @NotBlank
     @Column(name = "age", nullable = false, length = 2)
@@ -39,23 +39,24 @@ public class Pet {
 
     @NotBlank
     @Column(name = "description", nullable = false, length = 300)
+    private String description;
 
-    @NotNull
-    @ManyToOne
-    @JsonIgnoreProperties("pets")
-    @JoinColumn(name = "user_id", nullable = false, updatable = false)
-    private User user;
-
+    // @NotNull
+    // @ManyToOne
+    // @JsonIgnoreProperties("pets")
+    // @JoinColumn(name = "user_id", nullable = false, updatable = false)
+    // private User user;
 
     public Pet() {
     }
 
-    public Pet(Long id, String type, String name, String age, User user) {
+    public Pet(Long id, String type, String name, String age, String description) {
         this.id = id;
         this.type = type;
         this.name = name;
         this.age = age;
-        this.user = user;
+        this.description = description;
+        // this.user = user;
     }
 
 
@@ -65,14 +66,6 @@ public class Pet {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getModel() {
-        return this.type;
-    }
-
-    public void setModel(String type) {
-        this.type = type;
     }
 
     public String getName() {
@@ -91,14 +84,31 @@ public class Pet {
         this.age = age;
     }
 
-    public User getUser() {
-        return this.user;
+    public String getType() {
+        return this.type;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setType(String type) {
+        this.type = type;
     }
 
+    public String getDescription() {
+        return this.description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    // public User getUser() {
+    //     return this.user;
+    // }
+
+    // public void setUser(User user) {
+    //     this.user = user;
+    // }
+
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
