@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.adopets.adopets.model.Pet;
 import com.adopets.adopets.repositories.PetRepository;
+import com.adopets.adopets.services.exceptions.ObjectNotFoundException;
 
 import jakarta.transaction.Transactional;
 
@@ -15,7 +16,7 @@ public class PetService {
     private PetRepository petRepository;
 
     public Pet findById(Long id) {
-        return petRepository.findById(id).orElseThrow(() -> new RuntimeException("Pet not found with id: " + id));
+        return petRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Pet not found with id: " + id));
     }
 
     @Transactional
