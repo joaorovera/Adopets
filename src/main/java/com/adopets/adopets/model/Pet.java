@@ -1,6 +1,6 @@
 package com.adopets.adopets.model;
 
-import java.util.Objects;
+// import java.util.Objects;
 
 // import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -14,7 +14,17 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 // import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@EqualsAndHashCode
 @Entity
 @Table(name = Pet.TABLE_NAME)
 public class Pet {
@@ -47,77 +57,5 @@ public class Pet {
     // @JoinColumn(name = "user_id", nullable = false, updatable = false)
     // private User user;
 
-    public Pet() {
-    }
-
-    public Pet(Long id, String type, String name, String age, String description) {
-        this.id = id;
-        this.type = type;
-        this.name = name;
-        this.age = age;
-        this.description = description;
-        // this.user = user;
-    }
-
-
-    public Long getId() {
-        return this.id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAge() {
-        return this.age;
-    }
-
-    public void setAge(String age) {
-        this.age = age;
-    }
-
-    public String getType() {
-        return this.type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getDescription() {
-        return this.description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    // public User getUser() {
-    //     return this.user;
-    // }
-
-    // public void setUser(User user) {
-    //     this.user = user;
-    // }
-
     
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Pet pet)) return false;
-        return Objects.equals(id, pet.id) && Objects.equals(type, pet.type) && Objects.equals(name, pet.name) && Objects.equals(age, pet.age);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, type, name, age);
-    }
 }
