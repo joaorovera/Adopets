@@ -39,10 +39,6 @@ public class User {
     private Long id;
 
     @NotBlank
-    @Column(name = "name", nullable = false)
-    private String name;
-
-    @NotBlank
     @Email
     @Column(name = "email", nullable = false, unique = true)
     private String email;

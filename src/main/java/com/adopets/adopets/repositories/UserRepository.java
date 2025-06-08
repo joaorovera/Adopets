@@ -9,6 +9,6 @@ import com.adopets.adopets.model.User;
 
 @Repository
 public interface UserRepository extends JpaRepository <User, Long> {
-    List<User> findByName(String name);
+    List<User> findByEmail(String email);
     
 }
