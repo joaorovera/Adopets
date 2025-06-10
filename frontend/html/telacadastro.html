@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Pet - AdoPets</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/stylecadastro.css">
+</head>
+<body>
+    <header class="cadastro-header">
+        <div class="container">
+            <div class="logo">
+                <img src="../assets/logo.png" alt="AdoPets">
+                <span class="logo-text">AdoPets</span>
+            </div>
+            <a href="index.html" class="btn-voltar">
+                <i class="fas fa-arrow-left"></i> Voltar
+            </a>
+        </div>
+    </header>
+
+    <main class="cadastro-container">
+        <div class="container">
+            <h1 class="cadastro-title">Cadastrar Novo Pet</h1>
+            
+            <form id="form-cadastro-pet" class="cadastro-form">
+                <div class="form-group foto-pet">
+                    <label for="foto-pet" class="foto-label">
+                        <div class="foto-preview" id="foto-preview">
+                            <i class="fas fa-camera"></i>
+                            <span>Adicionar Foto</span>
+                        </div>
+                        <input type="file" id="foto-pet" accept="image/*" required>
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label for="nome-pet">Nome do Pet</label>
+                    <input type="text" id="nome-pet" placeholder="Ex: Rex, Luna, Thor" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="tipo-pet">Tipo</label>
+                        <select id="tipo-pet" required>
+                            <option value="">Selecione</option>
+                            <option value="dog">Cachorro</option>
+                            <option value="cat">Gato</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="idade-pet">Idade (anos)</label>
+                        <input type="number" id="idade-pet" min="0" max="30" placeholder="Ex: 2" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="porte-pet">Porte</label>
+                        <select id="porte-pet" required>
+                            <option value="">Selecione</option>
+                            <option value="pequeno">Pequeno</option>
+                            <option value="medio">Médio</option>
+                            <option value="grande">Grande</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sexo-pet">Sexo</label>
+                        <select id="sexo-pet" required>
+                            <option value="">Selecione</option>
+                            <option value="macho">Macho</option>
+                            <option value="femea">Fêmea</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="localizacao-pet">Localização (Cidade/Estado)</label>
+                    <input type="text" id="localizacao-pet" placeholder="Ex: São Paulo, SP" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="descricao-pet">Descrição do Pet</label>
+                    <textarea id="descricao-pet" rows="5" placeholder="Conte um pouco sobre o pet: personalidade, cuidados especiais, etc." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="status-pet">Status</label>
+                    <select id="status-pet">
+                        <option value="">Normal</option>
+                        <option value="urgente">Urgente</option>
+                        <option value="novo">Novo</option>
+                    </select>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-cadastrar">
+                        <i class="fas fa-paw"></i> Cadastrar Pet
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer class="cadastro-footer">
+        <div class="container">
+            <p>© 2023 AdoPets. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <div id="modal-sucesso" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <div class="modal-icon success">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2>Cadastro realizado com sucesso!</h2>
+            <p>O pet foi cadastrado em nosso sistema e agora está disponível para adoção.</p>
+            <button id="btn-ok" class="btn-modal">OK</button>
+        </div>
+    </div>
+
+    <script src="../js/scriptcadastro.js"></script>
+</body>
+</html>

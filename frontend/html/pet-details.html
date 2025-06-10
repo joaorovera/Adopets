@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Pet - AdoPets</title>
+    <link rel="stylesheet" href="../css/stylehome.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Cabeçalho (igual ao da home) -->
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <div class="logo">
+                    <img src="../assets/logo.png" alt="AdoPets">
+                    <span class="logo-text">- AdoPets</span>
+                </div>
+                <div class="header-buttons">
+                    <a href="login.html" class="btn btn-secondary">Administração</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Seção de detalhes do pet -->
+    <section class="pet-details-section">
+        <div class="container">
+            <a href="index.html" class="back-link">
+                <i class="fas fa-arrow-left"></i> Voltar para todos os pets
+            </a>
+            
+            <div class="pet-details-container">
+                <!-- Lado esquerdo - Foto do pet -->
+                <div class="pet-image-container">
+                    <div class="main-image">
+                        <img src="https://via.placeholder.com/600x400" alt="Foto do pet" id="main-pet-image">
+                    </div>
+                    <div class="thumbnail-grid">
+                        <div class="thumbnail active" onclick="changeMainImage(this)">
+                            <img src="https://via.placeholder.com/150x100" alt="Miniatura 1">
+                        </div>
+                        <div class="thumbnail" onclick="changeMainImage(this)">
+                            <img src="https://via.placeholder.com/150x100" alt="Miniatura 2">
+                        </div>
+                        <div class="thumbnail" onclick="changeMainImage(this)">
+                            <img src="https://via.placeholder.com/150x100" alt="Miniatura 3">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Lado direito - Informações do pet -->
+                <div class="pet-info-container">
+                    <div class="pet-header">
+                        <h1 class="pet-name">Gujar</h1>
+                        <span class="pet-type-badge dog">Cachorro</span>
+                        <span class="pet-status urgent">Urgente</span>
+                    </div>
+                    
+                    <div class="pet-meta">
+                        <span><i class="fas fa-map-marker-alt"></i> São Paulo, SP</span>
+                        <span><i class="fas fa-venus-mars"></i> Macho</span>
+                        <span><i class="fas fa-birthday-cake"></i> 2 anos</span>
+                        <span><i class="fas fa-ruler-combined"></i> Médio Porte</span>
+                    </div>
+                    
+                    <div class="pet-description">
+                        <h2>Sobre o Gujar</h2>
+                        <p>Gujar é um cachorro muito brincalhão e amoroso. Foi resgatado das ruas e está procurando um lar definitivo onde possa receber muito carinho. Adora crianças e se dá bem com outros animais. Precisa de um tutor que tenha tempo para passeios diários, pois tem muita energia!</p>
+                        
+                        <h2>História</h2>
+                        <p>Resgatado em situação de maus-tratos, Gujar estava desnutrido e com problemas de pele. Após tratamento veterinário, está completamente saudável e pronto para adoção.</p>
+                        
+                        <h2>Cuidados Especiais</h2>
+                        <ul>
+                            <li>Necessita de escovação semanal</li>
+                            <li>Passeios diários recomendados</li>
+                            <li>Dieta especial para controle de peso</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="pet-actions">
+                        <button class="btn btn-primary btn-large">
+                            <i class="fas fa-heart"></i> Quero adotar
+                        </button>
+                        <button class="btn btn-secondary btn-large">
+                            <i class="fas fa-share-alt"></i> Compartilhar
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Seção de pets relacionados -->
+            <div class="related-pets">
+                <h2>Outros peludos que precisam de um lar</h2>
+                <div class="pets-grid">
+                    <!-- Cards de pets relacionados (mesmo estilo da home) -->
+                    <div class="pet-card">
+                        <div class="pet-type-bg dog-bg"></div>
+                        <img src="https://via.placeholder.com/300x200" alt="Código" class="pet-image">
+                        <div class="pet-info">
+                            <h3 class="pet-name">Código</h3>
+                            <p class="pet-location">Rio de Janeiro, RJ</p>
+                            <span class="pet-type">Cachorro</span>
+                        </div>
+                    </div>
+                    
+                    <div class="pet-card">
+                        <div class="pet-type-bg cat-bg"></div>
+                        <img src="https://via.placeholder.com/300x200" alt="Mingau" class="pet-image">
+                        <div class="pet-info">
+                            <h3 class="pet-name">Mingau</h3>
+                            <p class="pet-location">Belo Horizonte, MG</p>
+                            <span class="pet-type">Gato</span>
+                            <span class="pet-status">Urgente</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Rodapé (igual ao da home) -->
+    <footer>
+        <!-- ... mesmo rodapé da home ... -->
+    </footer>
+
+    <script>
+        // Função para trocar a imagem principal ao clicar nas miniaturas
+        function changeMainImage(thumbnail) {
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            thumbnails.forEach(t => t.classList.remove('active'));
+            thumbnail.classList.add('active');
+            
+            const newSrc = thumbnail.querySelector('img').src;
+            document.getElementById('main-pet-image').src = newSrc;
+        }
+        
+        // Simulação de carregamento de dados do pet
+        document.addEventListener('DOMContentLoaded', function() {
+            // Aqui você pode buscar os dados reais da API
+            // const petId = new URLSearchParams(window.location.search).get('id');
+            // fetch(`/pets/${petId}`)... etc.
+        });
+    </script>
+</body>
+</html>
