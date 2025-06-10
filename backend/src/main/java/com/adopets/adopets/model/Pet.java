@@ -48,6 +48,18 @@ public class Pet {
     private String age;
 
     @NotBlank
+    @Column(name = "gender", nullable = false, length = 1)
+    private String gender;
+
+    @NotBlank
+    @Column(name = "city", nullable = false, length = 50)
+    private String city;
+
+    @NotBlank
+    @Column(name = "status", nullable = false, length = 300)
+    private String status;
+
+    @NotBlank
     @Column(name = "description", nullable = false, length = 300)
     private String description;
 
@@ -57,5 +69,4 @@ public class Pet {
     // @JoinColumn(name = "user_id", nullable = false, updatable = false)
     // private User user;
 
-    
 }
