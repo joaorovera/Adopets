@@ -63,6 +63,9 @@ public class Pet {
     @Column(name = "description", nullable = false, length = 300)
     private String description;
 
+    @Column(name = "imageUrl", length = 60)
+    private String imageUrl;
+
     // @NotNull
     // @ManyToOne
     // @JsonIgnoreProperties("pets")

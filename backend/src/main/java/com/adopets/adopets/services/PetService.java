@@ -21,7 +21,13 @@ public class PetService {
 
     @Transactional
     public Pet create(Pet pet) {
-        pet.setId(null); // Ensure the ID is null for a new entity
+        pet.setId(null);
+        pet = this.petRepository.save(pet);
+        if (pet.getId() != null) {
+            pet.setImageUrl(pet.getId() + ".png");
+        } else {
+            pet.setImageUrl("default.png");
+        }
         pet = this.petRepository.save(pet);
         return pet;
     }
