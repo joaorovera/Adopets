@@ -28,37 +28,33 @@ document.addEventListener('DOMContentLoaded', function() {
     // Envio do formulário
     formCadastro.addEventListener('submit', async function(e) {
         e.preventDefault();
-        
+
         // Coletar dados do formulário
-        const formData = new FormData();
-        formData.append('name', document.getElementById('nome-pet').value);
-        formData.append('type', document.getElementById('tipo-pet').value === 'dog' ? 'Cachorro' : 'Gato');
-        formData.append('age', document.getElementById('idade-pet').value);
-        formData.append('size', document.getElementById('porte-pet').value);
-        formData.append('gender', document.getElementById('sexo-pet').value);
-        formData.append('location', document.getElementById('localizacao-pet').value);
-        formData.append('description', document.getElementById('descricao-pet').value);
-        formData.append('status', document.getElementById('status-pet').value);
-        
-        // Adicionar a foto se foi selecionada
-        if (fotoInput.files[0]) {
-            formData.append('image', fotoInput.files[0]);
-        }
+        const petData = {
+            name: document.getElementById('nome-pet').value,
+            type: document.getElementById('tipo-pet').value === 'dog' ? 'Cachorro' : 'Gato',
+            age: String(document.getElementById('idade-pet').value),
+            gender: document.getElementById('sexo-pet').value === 'macho' ? 'M' : 'F',
+            city: document.getElementById('localizacao-pet').value,
+            status: document.getElementById('status-pet').value,
+            description: document.getElementById('descricao-pet').value
+        };
 
         try {
-            // Enviar para a API
-            const response = await fetch('http://localhost:8080/pets', {
+            const response = await fetch('http://localhost:8080/pet', {
                 method: 'POST',
-                body: formData
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(petData)
             });
 
             if (!response.ok) {
                 throw new Error('Erro ao cadastrar o pet');
             }
 
-            // Mostrar modal de sucesso
             modalSucesso.style.display = 'block';
-            
+
         } catch (error) {
             console.error('Erro:', error);
             alert('Ocorreu um erro ao cadastrar o pet. Por favor, tente novamente.');
