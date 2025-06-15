@@ -15,6 +15,10 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    public User validateCredentials(String email, String password) {
+        return userRepository.findByEmailAndPassword(email, password).orElse(null);
+    }
+
     public User findById(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("User not found with id: " + id));
     }
