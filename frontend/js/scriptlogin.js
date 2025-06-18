@@ -1,18 +1,40 @@
-// Função de login (exemplo simples, adapte para seu back-end)
+// Enviar email e senha para o back-end
 document.getElementById('loginForm').addEventListener('submit', function (event) {
     event.preventDefault();
 
-    const username = document.getElementById('username').value;
+    const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
-    // Aqui você faria a chamada para o seu back-end Java
-    console.log('Tentando logar com:', username, password);
+    fetch('http://localhost:8080/user/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            email: email,
+            password: password
+        })
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json(); // Se o back retornar um JSON
+        } else {
+            throw new Error('E-mail ou senha inválidos');
+        }
+    })
+    .then(data => {
+        document.getElementById('message').style.color = 'green';
+        document.getElementById('message').textContent = 'Login bem-sucedido!';
+        console.log('Login realizado com sucesso:', data);
 
-    // Simulação de sucesso
-    document.getElementById('message').textContent = 'Login bem-sucedido!';
-});
-
-// Botão Voltar
-document.getElementById('backButton').addEventListener('click', function () {
-    window.location.href = 'index.html'; 
+        // Redireciona após 1 segundo
+        setTimeout(() => {
+            window.location.href = 'index.html'; // Altere aqui se quiser outra página
+        }, 1000);
+    })
+    .catch(error => {
+        document.getElementById('message').style.color = 'red';
+        document.getElementById('message').textContent = error.message;
+        console.error('Erro no login:', error);
+    });
 });
