@@ -53,7 +53,7 @@
 
             <div class="hero-buttons">
                 <a href="#" class="btn btn-primary">Quero adotar</a>
-                <a href="#" class="btn btn-secondary">Quero divulgar um animal</a>
+                <a href="login.html" class="btn btn-secondary">Quero divulgar um animal</a>
             </div>
         </div>
     </section>
@@ -66,14 +66,14 @@
             <div class="alert-content">
                 <div class="alert-box">
                     <h3>Quero adotar</h3>
-                    <p>NÃO temos parcerias com canis e nem apoiamos feiras com animais de raÃa.</p>
+                    <p>NÃO temos parcerias com canis e nem apoiamos feiras com animais de raça.</p>
                     <p>NÃO permitimos a venda de animais em nossa plataforma.</p>
-                    <p>NÃO pedimos dados cadastrais e nem cÃdigos por WhatsApp, telefone ou e-mail.</p>
+                    <p>NÃO pedimos dados cadastrais e nem códigos por WhatsApp, telefone ou e-mail.</p>
                 </div>
 
                 <div class="alert-box">
                     <h3>Quero divulgar um animal</h3>
-                    <p>Nossa plataforma Ã© gratuita para divulgaÃ§Ã£o de animais para adoÃ§Ã£o responsÃ¡vel.</p>
+                    <p>Nossa plataforma são gratuitas para divulgações de animais para adoção responsável.</p>
                     <p>NÃO cobramos nenhuma taxa para cadastrar animais.</p>
                 </div>
             </div>
@@ -86,11 +86,11 @@
             <h2 class="section-title">Por que adotar?</h2>
 
             <p>Nesse exato momento, existem milhares de doguinhos e gatinhos esperando um humano para chamar de seu.</p>
-            <p>E nÃo hÃ¡ recompensa maior do que vÃª-los se tornando aquela coisinha alegre e saudÃ¡vel depois de uma boa dose de cuidado e carinho.</p>
+            <p>E não há recompensa maior do que velos se tornando aquela coisinha alegre e saudável depois de uma boa dose de cuidado e carinho.</p>
 
             <a href="#" class="btn btn-secondary">Encontrar meu novo amigo</a>
 
-            <p style="margin-top: 30px; font-style: italic;">Pensando bem, a pergunta Ã© outra:<br>se vocÃª pode mudar o destino de um animal de rua, por que nÃo faria isso?</p>
+            <p style="margin-top: 30px; font-style: italic;"> <br>se você pode mudar o destino de um animal de rua, por que não faria isso?</p>
         </div>
     </section>
 
@@ -102,7 +102,7 @@
                     <h3>ADOTE</h3>
                     <ul>
                         <li><a href="#">Adote com responsabilidade</a></li>
-                        <li><a href="#">FamÃlias animais</a></li>
+                        <li><a href="#">Famílias animais</a></li>
                     </ul>
                 </div>
 
@@ -117,7 +117,7 @@
                 <div class="footer-column">
                     <h3>DIVULGUE UM ANIMAL</h3>
                     <ul>
-                        <li><a href="#">Cadastre um animal</a></li>
+                        <li><a href="login.html">Cadastre um animal</a></li>
                     </ul>
                 </div>
 
@@ -125,7 +125,7 @@
                     <h3>SOBRE O ADOPETS</h3>
                     <ul>
                         <li><a href="#">Termos de uso e privacidade</a></li>
-                        <li><a href="#">PolÃ­ticas</a></li>
+                        <li><a href="#">Políticas</a></li>
                     </ul>
                 </div>
 
@@ -284,5 +284,199 @@
             color: #d9534f;
         }
     </style>
+
+<style>
+    /* Estilos para a página de detalhes do pet */
+    .pet-details-section {
+        padding: 60px 0;
+        background-color: white;
+    }
+
+    .back-link {
+        display: inline-block;
+        margin-bottom: 30px;
+        color: #ff914d;
+        font-weight: bold;
+    }
+
+    .back-link i {
+        margin-right: 8px;
+    }
+
+    .pet-details-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        margin-bottom: 60px;
+    }
+
+    .pet-image-container {
+        position: relative;
+    }
+
+    .main-image {
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .main-image img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    .thumbnail-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+
+    .thumbnail {
+        border-radius: 8px;
+        overflow: hidden;
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
+    }
+
+    .thumbnail.active {
+        border-color: #ff914d;
+    }
+
+    .thumbnail img {
+        width: 100%;
+        height: 100px;
+        object-fit: cover;
+    }
+
+    .pet-header {
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .pet-name {
+        font-size: 2.5rem;
+        color: #333;
+        margin-right: 15px;
+    }
+
+    .pet-type-badge {
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: bold;
+    }
+
+    .pet-type-badge.dog {
+        background-color: #ff914d;
+        color: white;
+    }
+
+    .pet-type-badge.cat {
+        background-color: #00bf63;
+        color: white;
+    }
+
+    .pet-status {
+        padding: 5px 15px;
+        background-color: #ff3333;
+        color: white;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: bold;
+        display: none; /* Inicialmente escondido */
+    }
+
+    .pet-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-bottom: 30px;
+        color: #666;
+    }
+
+    .pet-meta i {
+        margin-right: 5px;
+        color: #ff914d;
+    }
+
+    .pet-description h2 {
+        font-size: 1.5rem;
+        color: #ff914d;
+        margin: 25px 0 15px;
+    }
+
+    .pet-description p {
+        margin-bottom: 15px;
+        line-height: 1.7;
+    }
+
+    .pet-description ul {
+        margin-left: 20px;
+        margin-bottom: 20px;
+    }
+
+    .pet-description li {
+        margin-bottom: 8px;
+    }
+
+    .pet-actions {
+        display: flex;
+        gap: 20px;
+        margin-top: 40px;
+    }
+
+    .btn-large {
+        padding: 15px 30px;
+        font-size: 1.1rem;
+    }
+
+    .btn-large i {
+        margin-right: 8px;
+    }
+
+    .related-pets {
+        margin-top: 80px;
+    }
+
+    .related-pets h2 {
+        text-align: center;
+        margin-bottom: 40px;
+        color: #ff914d;
+    }
+
+    /* Responsividade */
+    @media (max-width: 992px) {
+        .pet-details-container {
+            grid-template-columns: 1fr;
+        }
+        
+        .pet-image-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .pet-actions {
+            flex-direction: column;
+        }
+        
+        .pet-name {
+            font-size: 2rem;
+        }
+        
+        .pet-meta {
+            flex-direction: column;
+            gap: 10px;
+        }
+    }
+</style>
+
 </body>
 </html>
