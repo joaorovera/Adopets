@@ -64,20 +64,18 @@
                         <span><i class="fas fa-ruler-combined"></i> Médio Porte</span>
                     </div>
                     
-                    <div class="pet-description">
-                        <h2>Sobre o Gujar</h2>
-                        <p>Gujar é um cachorro muito brincalhão e amoroso. Foi resgatado das ruas e está procurando um lar definitivo onde possa receber muito carinho. Adora crianças e se dá bem com outros animais. Precisa de um tutor que tenha tempo para passeios diários, pois tem muita energia!</p>
-                        
-                        <h2>História</h2>
-                        <p>Resgatado em situação de maus-tratos, Gujar estava desnutrido e com problemas de pele. Após tratamento veterinário, está completamente saudável e pronto para adoção.</p>
-                        
-                        <h2>Cuidados Especiais</h2>
-                        <ul>
-                            <li>Necessita de escovação semanal</li>
-                            <li>Passeios diários recomendados</li>
-                            <li>Dieta especial para controle de peso</li>
-                        </ul>
-                    </div>
+                   <div class="pet-description">
+    <h2>Sobre o <span class="pet-name-placeholder">pet</span></h2>
+    <p id="pet-description-text">Carregando descrição...</p>
+    
+    <h2>História</h2>
+    <p id="pet-history-text">História do pet será carregada aqui.</p>
+    
+    <h2>Cuidados Especiais</h2>
+    <ul id="pet-care-list">
+        <li>Os cuidados especiais serão listados aqui</li>
+    </ul>
+</div>
                     
                     <div class="pet-actions">
                         <button class="btn btn-primary btn-large">
@@ -126,22 +124,141 @@
     </footer>
 
     <script>
-        // Função para trocar a imagem principal ao clicar nas miniaturas
-        function changeMainImage(thumbnail) {
-            const thumbnails = document.querySelectorAll('.thumbnail');
-            thumbnails.forEach(t => t.classList.remove('active'));
-            thumbnail.classList.add('active');
-            
-            const newSrc = thumbnail.querySelector('img').src;
-            document.getElementById('main-pet-image').src = newSrc;
-        }
+    // Função para trocar a imagem principal
+    function changeMainImage(thumbnail) {
+        const thumbnails = document.querySelectorAll('.thumbnail');
+        thumbnails.forEach(t => t.classList.remove('active'));
+        thumbnail.classList.add('active');
         
-        // Simulação de carregamento de dados do pet
-        document.addEventListener('DOMContentLoaded', function() {
-            // Aqui você pode buscar os dados reais da API
-            // const petId = new URLSearchParams(window.location.search).get('id');
-            // fetch(`/pets/${petId}`)... etc.
+        const newSrc = thumbnail.querySelector('img').src;
+        document.getElementById('main-pet-image').src = newSrc;
+    }
+    
+    // Carrega os dados do pet da API
+    document.addEventListener('DOMContentLoaded', async function() {
+        const petId = new URLSearchParams(window.location.search).get('id');
+        
+        if (!petId) {
+            window.location.href = 'index.html';
+            return;
+        }
+
+        try {
+            const response = await fetch(`http://localhost:8080/pet/${petId}`);
+            
+            if (!response.ok) {
+                throw new Error('Pet não encontrado');
+            }
+
+            const pet = await response.json();
+            renderPetDetails(pet);
+            loadRelatedPets(pet.id, pet.type);
+            
+        } catch (error) {
+            console.error('Erro ao carregar pet:', error);
+            alert('Não foi possível carregar as informações deste pet. Voltando para a página inicial...');
+            window.location.href = 'index.html';
+        }
+    });
+
+    // Preenche os dados do pet na página
+    function renderPetDetails(pet) {
+        // Informações básicas
+        document.querySelector('.pet-name').textContent = pet.name;
+        document.querySelector('.pet-type-badge').textContent = pet.type;
+        document.querySelector('.pet-type-badge').className = `pet-type-badge ${pet.type === 'Gato' ? 'cat' : 'dog'}`;
+        
+        // Status (se existir)
+        const statusElement = document.querySelector('.pet-status');
+        if (pet.status === 'Urgente') {
+            statusElement.style.display = 'inline-block';
+        } else {
+            statusElement.style.display = 'none';
+        }
+
+        // Metadados
+        const metaElements = document.querySelectorAll('.pet-meta span');
+        metaElements[0].innerHTML = `<i class="fas fa-map-marker-alt"></i> ${pet.city}`;
+        metaElements[1].innerHTML = `<i class="fas fa-venus-mars"></i> ${pet.gender === 'M' ? 'Macho' : 'Fêmea'}`;
+        metaElements[2].innerHTML = `<i class="fas fa-birthday-cake"></i> ${pet.age} ${pet.age === 1 ? 'ano' : 'anos'}`;
+
+        // Descrição
+        document.querySelector('.pet-description p').textContent = pet.description;
+
+        // Imagens (usando placeholder se não houver imagem específica)
+        const mainImage = document.getElementById('main-pet-image');
+        mainImage.src = pet.imageUrl ? `../assets/pets/${pet.imageUrl}` : 'https://via.placeholder.com/600x400';
+        mainImage.alt = `Foto do ${pet.name}`;
+
+        // Miniaturas (simulação - na prática você pode ter um array de imagens no objeto pet)
+        const thumbnails = document.querySelectorAll('.thumbnail img');
+        thumbnails.forEach(thumb => {
+            thumb.src = pet.imageUrl ? `../assets/pets/${pet.imageUrl}` : 'https://via.placeholder.com/150x100';
+            thumb.alt = `Miniatura do ${pet.name}`;
         });
-    </script>
+    }
+
+    // Carrega pets relacionados do mesmo tipo
+    async function loadRelatedPets(currentPetId, petType) {
+        try {
+            const response = await fetch(`http://localhost:8080/pets?type=${petType}`);
+            
+            if (!response.ok) {
+                throw new Error('Erro ao carregar pets relacionados');
+            }
+
+            const relatedPets = await response.json();
+            
+            // Filtra o pet atual e pega apenas 2 pets do mesmo tipo
+            const filteredPets = relatedPets
+                .filter(pet => pet.id !== currentPetId)
+                .slice(0, 2);
+
+            renderRelatedPets(filteredPets);
+            
+        } catch (error) {
+            console.error('Erro ao carregar pets relacionados:', error);
+            document.querySelector('.related-pets').style.display = 'none';
+        }
+    }
+
+    // Renderiza os pets relacionados
+    function renderRelatedPets(pets) {
+        const relatedContainer = document.querySelector('.related-pets .pets-grid');
+        
+        if (pets.length === 0) {
+            document.querySelector('.related-pets').style.display = 'none';
+            return;
+        }
+
+        relatedContainer.innerHTML = '';
+
+        pets.forEach(pet => {
+            const petCard = document.createElement('div');
+            petCard.className = 'pet-card';
+            petCard.setAttribute('data-type', pet.type);
+
+            const bgClass = pet.type === 'Gato' ? 'cat-bg' : 'dog-bg';
+            const statusTag = pet.status === 'Urgente' ? '<span class="pet-status">Urgente</span>' : '';
+
+            petCard.innerHTML = `
+                <div class="pet-type-bg ${bgClass}"></div>
+                <img src="../assets/pets/${pet.imageUrl || 'default-pet.jpg'}" alt="${pet.name}" class="pet-image">
+                <div class="pet-info">
+                    <h3 class="pet-name">${pet.name}</h3>
+                    <p class="pet-location">${pet.city}</p>
+                    <span class="pet-type">${pet.type}</span>
+                    ${statusTag}
+                </div>
+            `;
+
+            petCard.addEventListener('click', () => {
+                window.location.href = `pet-details.html?id=${pet.id}`;
+            });
+
+            relatedContainer.appendChild(petCard);
+        });
+    }
+</script>
 </body>
 </html>
