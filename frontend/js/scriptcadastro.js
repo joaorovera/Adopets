@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Envio do formulário
     formCadastro.addEventListener('submit', async function(e) {
         e.preventDefault();
-        alert('Interceptou o submit!');
         // Coletar dados do formulário
         const petData = {
             name: document.getElementById('nome-pet').value,
