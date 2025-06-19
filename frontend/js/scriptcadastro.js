@@ -1,34 +1,14 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Elementos do formulário
     const formCadastro = document.getElementById('form-cadastro-pet');
-    const fotoInput = document.getElementById('foto-pet');
-    const fotoPreview = document.getElementById('foto-preview');
     const modalSucesso = document.getElementById('modal-sucesso');
     const btnOk = document.getElementById('btn-ok');
     const btnVoltar = document.querySelector('.btn-voltar');
 
-    // Preview da foto
-    fotoInput.addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            
-            reader.onload = function(e) {
-                fotoPreview.innerHTML = '';
-                const img = document.createElement('img');
-                img.src = e.target.result;
-                img.alt = 'Preview da foto do pet';
-                fotoPreview.appendChild(img);
-            }
-            
-            reader.readAsDataURL(file);
-        }
-    });
-
     // Envio do formulário
     formCadastro.addEventListener('submit', async function(e) {
         e.preventDefault();
-
+        alert('Interceptou o submit!');
         // Coletar dados do formulário
         const petData = {
             name: document.getElementById('nome-pet').value,
@@ -65,14 +45,14 @@ document.addEventListener('DOMContentLoaded', function() {
     btnOk.addEventListener('click', function() {
         modalSucesso.style.display = 'none';
         formCadastro.reset();
-        fotoPreview.innerHTML = '<i class="fas fa-camera"></i><span>Adicionar Foto</span>';
+        // fotoPreview removido
     });
 
     // Fechar modal ao clicar no X
     modalSucesso.querySelector('.modal-close').addEventListener('click', function() {
         modalSucesso.style.display = 'none';
         formCadastro.reset();
-        fotoPreview.innerHTML = '<i class="fas fa-camera"></i><span>Adicionar Foto</span>';
+        // fotoPreview removido
     });
 
     // Voltar para a página inicial
@@ -86,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (e.target === modalSucesso) {
             modalSucesso.style.display = 'none';
             formCadastro.reset();
-            fotoPreview.innerHTML = '<i class="fas fa-camera"></i><span>Adicionar Foto</span>';
+            // fotoPreview removido
         }
     });
 });
