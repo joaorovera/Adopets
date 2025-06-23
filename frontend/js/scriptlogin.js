@@ -27,9 +27,9 @@ document.getElementById('loginForm').addEventListener('submit', function (event)
         document.getElementById('message').textContent = 'Login bem-sucedido!';
         console.log('Login realizado com sucesso:', data);
 
-        // Redireciona após 1 segundo
+        // Redireciona após 1 segundo para a tela de cadastro
         setTimeout(() => {
-            window.location.href = 'index.html'; // Altere aqui se quiser outra página
+            window.location.href = 'telacadastro.html'; // Redireciona para a tela de cadastro
         }, 1000);
     })
     .catch(error => {
