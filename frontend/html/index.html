@@ -29,12 +29,6 @@
             <h2 class="section-title">Novos peludos por aqui</h2>
             <p class="section-subtitle">Nosso site está cheio de doguinhos e gatinhos ansiosos por uma família. Vem ver!</p>
 
-            <div class="filter-section">
-                <button class="btn-filter active" data-filter="all">Todos</button>
-                <button class="btn-filter" data-filter="Cachorro">Cachorros</button>
-                <button class="btn-filter" data-filter="Gato">Gatos</button>
-            </div>
-
             <div class="pets-grid" id="pets-container">
                 <div class="loading-message">Carregando pets...</div>
             </div>
@@ -146,129 +140,94 @@
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const petsContainer = document.getElementById('pets-container');
-            const loadMoreButton = document.getElementById('load-more');
-            let currentId = 1;
-            const petsPerPage = 8;
-            let reachedEnd = false;
+     document.addEventListener('DOMContentLoaded', function() {
+    const petsContainer = document.getElementById('pets-container');
+    const loadMoreButton = document.getElementById('load-more');
+    let currentId = 1;
+    const petsPerPage = 8;
+    let reachedEnd = false;
 
-            async function fetchPet(id) {
-                try {
-                    const response = await fetch(`http://localhost:8080/pet/${id}`);
-                    if (!response.ok) {
-                        return null;
-                    }
-                    const pet = await response.json();
-                    return pet;
-                } catch (error) {
-                    console.error('Erro ao buscar pet:', error);
-                    return null;
-                }
+    async function fetchPet(id) {
+        try {
+            const response = await fetch(`http://localhost:8080/pet/${id}`);
+            if (!response.ok) {
+                return null;
             }
+            const pet = await response.json();
+            return pet;
+        } catch (error) {
+            console.error('Erro ao buscar pet:', error);
+            return null;
+        }
+    }
 
-            async function loadPets() {
-                if (reachedEnd) return;
+    async function loadPets() {
+        if (reachedEnd) return;
 
-                // Remove loading message if present
-                const loadingMsg = petsContainer.querySelector('.loading-message');
-                if (loadingMsg) {
-                    loadingMsg.remove();
-                }
+        // Remove loading message if present
+        const loadingMsg = petsContainer.querySelector('.loading-message');
+        if (loadingMsg) {
+            loadingMsg.remove();
+        }
 
-                let petsLoaded = 0;
-                let petsFound = [];
-                let attempts = 0;
+        let petsLoaded = 0;
+        let petsFound = [];
+        let attempts = 0;
 
-                while (petsLoaded < petsPerPage && attempts < petsPerPage) {
-                    const pet = await fetchPet(currentId);
-                    attempts++;
-                    currentId++;
-                    if (pet) {
-                        petsFound.push(pet);
-                        petsLoaded++;
-                    }
-                }
-
-                if (petsFound.length === 0 && petsContainer.querySelectorAll('.pet-card').length === 0) {
-                    petsContainer.innerHTML = '<div class="no-pets">Nenhum pet disponível no momento.</div>';
-                    loadMoreButton.style.display = 'none';
-                    reachedEnd = true;
-                    return;
-                }
-
-                renderPets(petsFound);
-
-                initFilters();
+        while (petsLoaded < petsPerPage && attempts < petsPerPage) {
+            const pet = await fetchPet(currentId);
+            attempts++;
+            currentId++;
+            if (pet) {
+                petsFound.push(pet);
+                petsLoaded++;
             }
+        }
 
-            function renderPets(pets) {
-                pets.forEach(pet => {
-                    const petCard = document.createElement('div');
-                    petCard.className = 'pet-card';
-                    petCard.setAttribute('data-type', pet.type);
+        if (petsFound.length === 0 && petsContainer.querySelectorAll('.pet-card').length === 0) {
+            petsContainer.innerHTML = '<div class="no-pets">Nenhum pet disponível no momento.</div>';
+            loadMoreButton.style.display = 'none';
+            reachedEnd = true;
+            return;
+        }
 
-                    const bgClass = pet.type === 'Gato' ? 'cat-bg' : 'dog-bg';
-                    const statusTag = pet.status === 'Urgente' ? '<span class="pet-status">Urgente</span>' : '';
+        renderPets(petsFound);
+    }
 
-                    petCard.innerHTML = `
-                        <div class="pet-type-bg ${bgClass}"></div>
-                        <img src="../assets/pets/${pet.imageUrl}" alt="${pet.name}" class="pet-image">
-                        <div class="pet-info">
-                            <h3 class="pet-name">${pet.name}</h3>
-                            <p class="pet-location">${pet.city}</p>
-                            <span class="pet-type">${pet.type}</span>
-                            ${statusTag}
-                        </div>
-                    `;
+    function renderPets(pets) {
+        pets.forEach(pet => {
+            const petCard = document.createElement('div');
+            petCard.className = 'pet-card';
 
-                    petCard.addEventListener('click', function() {
-                        window.location.href = `pet-details.html?id=${pet.id}`;
-                    });
+            const bgClass = pet.type === 'Gato' ? 'cat-bg' : 'dog-bg';
+            const statusTag = pet.status === 'Urgente' ? '<span class="pet-status">Urgente</span>' : '';
 
-                    petsContainer.appendChild(petCard);
-                });
-            }
+            petCard.innerHTML = `
+                <div class="pet-type-bg ${bgClass}"></div>
+                <img src="../assets/pets/${pet.imageUrl}" alt="${pet.name}" class="pet-image">
+                <div class="pet-info">
+                    <h3 class="pet-name">${pet.name}</h3>
+                    <p class="pet-location">${pet.city}</p>
+                    <span class="pet-type">${pet.type}</span>
+                    ${statusTag}
+                </div>
+            `;
 
-            function initFilters() {
-                const filterButtons = document.querySelectorAll('.btn-filter');
-                const petCards = document.querySelectorAll('.pet-card');
-
-                filterButtons.forEach(button => {
-                    button.addEventListener('click', function() {
-                        filterButtons.forEach(btn => btn.classList.remove('active'));
-                        this.classList.add('active');
-
-                        const filter = this.getAttribute('data-filter');
-
-                        petCards.forEach(card => {
-                            if (filter === 'all' || card.getAttribute('data-type') === filter) {
-                                card.style.display = 'block';
-                            } else {
-                                card.style.display = 'none';
-                            }
-                        });
-                    });
-                });
-
-                petCards.forEach(card => {
-                    card.addEventListener('mouseenter', function() {
-                        this.style.boxShadow = '0 8px 16px rgba(0, 0, 0, 0.2)';
-                    });
-
-                    card.addEventListener('mouseleave', function() {
-                        this.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.1)';
-                    });
-                });
-            }
-
-            loadMoreButton.addEventListener('click', function(e) {
-                e.preventDefault();
-                loadPets();
+            petCard.addEventListener('click', function() {
+                window.location.href = `pet-details.html?id=${pet.id}`;
             });
 
-            loadPets();
+            petsContainer.appendChild(petCard);
         });
+    }
+
+    loadMoreButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        loadPets();
+    });
+
+    loadPets();
+});
     </script>
 
     <style>
